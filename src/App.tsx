@@ -10,17 +10,18 @@ import { ThemeProvider } from './context/Darktheme';
 import { RootLayout } from './pages/RootLayout';
 import Dashboard from './components/dashboard/Dashboard';
 import { QueryProvider } from './lib/react-query/QueryClient';
+import { ShipPage } from './components/ships/ShipPage';
 export default function App() {
   return (
     <BrowserRouter>
       <ThemeProvider>
-        <QueryProvider>
+        <QueryProvider> 
           <div className="outer w-full flex flex-row">
             <Routes>
               <Route path="/login" element={<Login />} />
-              <Route path="" element={<RootLayout />}>
+              <Route path="/" element={<RootLayout />}>
                 <Route path="/" index element={<Dashboard />} />
-                <Route path="/all-users" index element={<Dashboard />} />
+                <Route path="/all-ships"  element={<ShipPage />} />
               </Route>
 
               {/* </div> */}

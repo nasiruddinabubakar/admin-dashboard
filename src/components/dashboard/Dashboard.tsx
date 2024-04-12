@@ -1,40 +1,46 @@
-import { Activity, CreditCard, DollarSign, Users } from 'lucide-react';
+import { Activity, CreditCard, DollarSign, Loader, Users } from 'lucide-react';
 import PageTitle from '../ui/PageTitle';
 import Card, { CardContent, CardProps } from './Card';
 import BarChart from '../BarChart';
 import SalesCard, { SalesProps } from './SalesCard';
-import { useGetSalesData } from '@/lib/react-query/queriesAndMutations';
-import { useQuery } from '@tanstack/react-query';
+import { useGetBookings, useGetSalesData } from '@/lib/react-query/queriesAndMutations';
+import { Orders } from '../orders/Orders';
 
-const Dashboard = () => {
-  const {
-    data: { data },
-    isPending,
-  } = useGetSalesData();
-  console.log(data);
+
+
+const   Dashboard =  () => {
+  // const { data: cardDataApi, isPending } = useQuery({
+  //   queryKey: [QueryKeys.SALES_DATA],
+  //   queryFn: getSalesData,
+  //   staleTime: Infinity,
+  // });
+  const { data: cardDataApi, isPending } = useGetSalesData(); 
+  console.log(cardDataApi);
+
+
   const cardData: CardProps[] = [
     {
       label: 'Total Revenue',
-      amount: `$${Math.round(data.totalSales * 0.15)}  `,
+      amount: `$${Math.round(cardDataApi?.data.totalSales * 0.15)}  `,
       discription: '+20.1% from last month',
       icon: DollarSign,
     },
     {
       label: 'Sales',
-      amount: `${Math.round(data.totalOrders)}`,
+      amount: `${Math.round(cardDataApi?.data.totalOrders)}`,
       discription: '+180.1% from last month',
       icon: CreditCard,
     },
     {
       label: 'Customers',
-      amount: `${data.totalCustomers}`,
+      amount: `${cardDataApi?.data.totalCustomers}`,
       discription: '+19% from last month',
 
       icon: Users,
     },
     {
       label: 'Companies',
-      amount: `${data.totalCompanies}`,
+      amount: `${cardDataApi?.data.totalCompanies}`,
       discription: '+1 since last hour',
       icon: Activity,
     },
@@ -69,22 +75,28 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="w-full flex flex-col gap-4 p-3 h-[100vh] ">
+    <div className="w-full flex flex-col gap-4 p-3 h-[100vh] overflow-y-scroll ">
       <PageTitle title="Dashboard" />
 
       <section className="grid mt-1   w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4">
-        {cardData.map((d, i) => (
-          <Card
-            key={i}
-            amount={d.amount}
-            discription={d.discription}
-            icon={d.icon}
-            label={d.label}
-          />
-        ))}
+        {isPending ? (
+          <div className="animate-pulse flex flex-col gap-4">
+            <Loader />
+          </div>
+        ) : (
+          cardData.map((d, i) => (
+            <Card
+              key={i}
+              amount={d.amount}
+              discription={d.discription}
+              icon={d.icon}
+              label={d.label}
+            />
+          ))
+        )}
       </section>
 
-      <section className="grid grid-cols-1  gap-4 transition-all lg:grid-cols-2">
+      <section className="grid grid-cols-1  gap-6 transition-all lg:grid-cols-2">
         <CardContent>
           <p className="p-4 font-semibold">Overview</p>
 
@@ -106,7 +118,15 @@ const Dashboard = () => {
             />
           ))}
         </CardContent>
+       
+       
+          {/* < */}
+         
+          
       </section>
+      <Orders/>
+      {/* <OrderInfo/> */}
+     
     </div>
   );
 };

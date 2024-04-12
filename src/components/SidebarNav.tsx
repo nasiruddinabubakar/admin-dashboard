@@ -1,4 +1,4 @@
-import { Archive, ArchiveX, Building, File, Inbox, LayoutDashboard, Send, Settings, Trash2, User } from "lucide-react";
+import { Archive, ArchiveX, Building, File, Inbox, LayoutDashboard, Send, Settings, ShipIcon, Trash2, User } from "lucide-react";
 import { ModeToggle } from "./shared/DarkMode";
 import { Nav } from "./sidebar/Nav";
 
@@ -12,14 +12,14 @@ const SidebarNav = () => {
           links={[
             {
               title: "Dashboard",
-              
+              linkTO:'/',
               icon: LayoutDashboard,
-              variant: "default",
+              variant: "ghost",
             },
             {
-              title: "All Users",
-              
-              icon: User,
+              title: "All Ships",
+              linkTO:'/all-ships',
+              icon: ShipIcon,
               variant: "ghost",
             },
             {

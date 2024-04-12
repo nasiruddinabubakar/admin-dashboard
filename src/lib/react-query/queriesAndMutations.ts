@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getSalesData } from './api';
+import { getBookings, getSalesData } from './api';
 import { QueryKeys } from './queryKeys';
 
 export const useGetSalesData = () => {
@@ -9,3 +9,13 @@ export const useGetSalesData = () => {
     staleTime: Infinity,
   });
 };
+
+export const useGetBookings = () => {
+
+  return useQuery({
+    queryKey: [QueryKeys.BOOKINGS],
+    queryFn:()=> getBookings(),
+    staleTime: Infinity,
+  });
+
+}
