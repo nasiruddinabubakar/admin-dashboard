@@ -1,62 +1,71 @@
-import { Activity, CreditCard, DollarSign, Users } from "lucide-react";
-import PageTitle from "../ui/PageTitle";
-import Card, { CardContent, CardProps } from "./Card";
-import BarChart from "../BarChart";
-import SalesCard, { SalesProps } from "./SalesCard";
+import { Activity, CreditCard, DollarSign, Users } from 'lucide-react';
+import PageTitle from '../ui/PageTitle';
+import Card, { CardContent, CardProps } from './Card';
+import BarChart from '../BarChart';
+import SalesCard, { SalesProps } from './SalesCard';
+import { useGetSalesData } from '@/lib/react-query/queriesAndMutations';
+import { useQuery } from '@tanstack/react-query';
 
 const Dashboard = () => {
+  const {
+    data: { data },
+    isPending,
+  } = useGetSalesData();
+  console.log(data);
   const cardData: CardProps[] = [
     {
-      label: "Total Revenue",
-      amount: "$45,231.89",
-      discription: "+20.1% from last month",
+      label: 'Total Revenue',
+      amount: `$${Math.round(data.totalSales * 0.15)}  `,
+      discription: '+20.1% from last month',
       icon: DollarSign,
     },
     {
-      label: "Subscriptions",
-      amount: "+2350",
-      discription: "+180.1% from last month",
-      icon: Users,
-    },
-    {
-      label: "Sales",
-      amount: "+12,234",
-      discription: "+19% from last month",
+      label: 'Sales',
+      amount: `${Math.round(data.totalOrders)}`,
+      discription: '+180.1% from last month',
       icon: CreditCard,
     },
     {
-      label: "Active Now",
-      amount: "+573",
-      discription: "+201 since last hour",
+      label: 'Customers',
+      amount: `${data.totalCustomers}`,
+      discription: '+19% from last month',
+
+      icon: Users,
+    },
+    {
+      label: 'Companies',
+      amount: `${data.totalCompanies}`,
+      discription: '+1 since last hour',
       icon: Activity,
     },
   ];
+
   const uesrSalesData: SalesProps[] = [
     {
-      name: "Olivia Martin",
-      email: "olivia.martin@email.com",
-      saleAmount: "+$1,999.00"
+      name: 'Olivia Martin',
+      email: 'olivia.martin@email.com',
+      saleAmount: '+$1,999.00',
     },
     {
-      name: "Jackson Lee",
-      email: "isabella.nguyen@email.com",
-      saleAmount: "+$1,999.00"
+      name: 'Jackson Lee',
+      email: 'isabella.nguyen@email.com',
+      saleAmount: '+$1,999.00',
     },
     {
-      name: "Isabella Nguyen",
-      email: "isabella.nguyen@email.com",
-      saleAmount: "+$39.00"
+      name: 'Isabella Nguyen',
+      email: 'isabella.nguyen@email.com',
+      saleAmount: '+$39.00',
     },
     {
-      name: "William Kim",
-      email: "will@email.com",
-      saleAmount: "+$299.00"
+      name: 'William Kim',
+      email: 'will@email.com',
+      saleAmount: '+$299.00',
     },
     {
-      name: "Sofia Davis",
-      email: "sofia.davis@email.com",
-      saleAmount: "+$39.00"
-    }
+      name: 'Sofia Davis',
+      email: 'sofia.davis@email.com',
+      saleAmount: '+$39.00',
+    },
   ];
 
   return (
@@ -80,7 +89,6 @@ const Dashboard = () => {
           <p className="p-4 font-semibold">Overview</p>
 
           <BarChart />
-         
         </CardContent>
         <CardContent className="flex justify-between gap-4">
           <section>

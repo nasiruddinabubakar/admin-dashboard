@@ -1,17 +1,35 @@
-import SidebarNav from "./components/SidebarNav";
-import Dashboard from "./components/dashboard/Dashboard";
+import Login from './auth/login';
 
-import { ThemeProvider } from "./context/Darktheme";
+import {
+  BrowserRouter as Router,
+  Route,
+  BrowserRouter,
+  Routes,
+} from 'react-router-dom';
+import { ThemeProvider } from './context/Darktheme';
+import { RootLayout } from './pages/RootLayout';
+import Dashboard from './components/dashboard/Dashboard';
+import { QueryProvider } from './lib/react-query/QueryClient';
 export default function App() {
   return (
-    // <div className="w-full h-full flex flex-1  custom-class ">
-    <ThemeProvider>
-      <div className="outer w-full flex flex-row">
-        {/* <Login/> */}
-        {/* </div> */}
-        <SidebarNav />
-        <Dashboard/>
-      </div>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider>
+        <QueryProvider>
+          <div className="outer w-full flex flex-row">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="" element={<RootLayout />}>
+                <Route path="/" index element={<Dashboard />} />
+                <Route path="/all-users" index element={<Dashboard />} />
+              </Route>
+
+              {/* </div> */}
+              {/* <SidebarNav /> */}
+              {/* <Dashboard/> */}
+            </Routes>
+          </div>
+        </QueryProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
