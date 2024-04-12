@@ -12,6 +12,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+
 import { useTheme } from "@/context/Darktheme";
 
 const Login = () => {
@@ -186,11 +188,25 @@ const Login = () => {
                   </FormItem>
                 )}
               />
-              <Button className="w-full mt-3 " type="submit">
+              <Button className="w-full " type="submit">
                 Submit
               </Button>
             </form>
           </Form>
+          <div className="items-top mt-5 flex space-x-2">
+            <Checkbox id="terms1" />
+            <div className="grid gap-1.5 leading-none">
+              <label
+                htmlFor="terms1"
+                className="text-[14px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Accept terms and conditions
+              </label>
+              <p className="text-sm text-muted-foreground">
+                You agree to our Terms of Service and Privacy Policy.
+              </p>
+            </div>
+          </div>
         </div>
       </TabsContent>
     </Tabs>
